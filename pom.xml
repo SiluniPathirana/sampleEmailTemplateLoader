@@ -1,0 +1,179 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+
+<groupId>org.custom.sample</groupId>
+<artifactId>customEmailTemplateLoader</artifactId>
+<version>1.0</version>
+<packaging>bundle</packaging>
+
+
+
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
+
+<dependencies>
+    <dependency>
+        <groupId>org.wso2.carbon</groupId>
+        <artifactId>org.wso2.carbon.logging</artifactId>
+        <!--<version>4.4.11</version>-->
+        <version>4.4.26</version>
+
+    </dependency>
+    <dependency>
+        <groupId>org.wso2.carbon.identity.framework</groupId>
+        <artifactId>org.wso2.carbon.identity.event</artifactId>
+        <!--<version>5.7.5</version>-->
+        <version>5.11.148</version>
+
+    </dependency>
+    <dependency>
+        <groupId>org.wso2.eclipse.osgi</groupId>
+        <artifactId>org.eclipse.osgi.services</artifactId>
+        <version>3.5.100.v20160504-1419</version>
+    </dependency>
+    <dependency>
+        <groupId>org.wso2.carbon.identity.cloud</groupId>
+        <artifactId>org.wso2.carbon.identity.cloud.observer.tenant</artifactId>
+        <version>1.0.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.wso2.carbon.identity.event.handler.notification</groupId>
+        <artifactId>org.wso2.carbon.email.mgt</artifactId>
+        <version>1.0.18</version>
+    </dependency>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-scr-plugin</artifactId>
+            <version>1.7.2</version>
+            <executions>
+                <execution>
+                    <id>generate-scr-scrdescriptor</id>
+                    <goals>
+                        <goal>scr</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <extensions>true</extensions>
+            <version>2.4.0</version>
+            <configuration>
+                <instructions>
+                    <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                    <Bundle-Name>${project.artifactId}</Bundle-Name>
+                    <Private-Package>
+                        org.custom.sample.internal,
+                    </Private-Package>
+                    <Import-Package>org.custom.sample;version="1.0.0"</Import-Package>
+                    <DynamicImport-Package>*</DynamicImport-Package>
+                    <Export-Package>
+                        !org.custom.sample.internal, org.custom.sample.*;version="1.0.0-SNAPSHOT"
+                    </Export-Package>
+                    <Private-Package>
+                        org.custom.sample.internal
+                    </Private-Package>
+                </instructions>
+            </configuration>
+        </plugin>
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.1</version>
+            <inherited>true</inherited>
+            <configuration>
+                <encoding>UTF-8</encoding>
+                <source>1.7</source>
+                <target>1.7</target>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>wso2.releases</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </pluginRepository>
+
+        <pluginRepository>
+            <id>wso2.snapshots</id>
+            <name>WSO2 Snapshot Repository</name>
+            <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+<repositories>
+    <repository>
+        <id>wso2-nexus</id>
+        <name>WSO2 internal Repository</name>
+        <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+        <releases>
+            <enabled>true</enabled>
+            <updatePolicy>daily</updatePolicy>
+            <checksumPolicy>ignore</checksumPolicy>
+        </releases>
+    </repository>
+
+    <repository>
+        <id>wso2.releases</id>
+        <name>WSO2 internal Repository</name>
+        <url>http://maven.wso2.org/nexus/content/repositories/releases/</url>
+        <releases>
+            <enabled>true</enabled>
+            <updatePolicy>daily</updatePolicy>
+            <checksumPolicy>ignore</checksumPolicy>
+        </releases>
+    </repository>
+
+    <repository>
+        <id>wso2.snapshots</id>
+        <name>Apache Snapshot Repository</name>
+        <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>daily</updatePolicy>
+        </snapshots>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+    </repository>
+</repositories>
+</project>
